@@ -1,0 +1,5 @@
+<h2>Create new Recipe</h2>
+<form [formGroup]="recipeForm" (ngSubmit)="submitForm()">
+  <input type="text" name="name" formControlName="recipeName">
+  <button type="submit">Submit recipe</button>
+</form>

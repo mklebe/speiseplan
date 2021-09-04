@@ -3,11 +3,14 @@ import { getGreeting } from '../support/app.po';
 describe('speiseplan', () => {
   beforeEach(() => cy.visit('/'));
 
-  it('should display welcome message', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
+  it('must show Gulasch in the recipe list, when added Gulasch in the recipe form', () => {
+    cy.get('form input[name=name]')
+      .type('Gulasch')
+      .should('have.value', 'Gulasch')
 
-    // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome to speiseplan!');
+    cy.get('form')
+      .submit();
+
+    cy.get('.recipe-list-item').first().should('have.text', 'Gulasch')
   });
 });

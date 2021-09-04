@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Message } from '@angular-nest/api-interfaces';
+import { Recipe } from '@angular-nest/api-interfaces';
 
 @Component({
   selector: 'angular-nest-root',
@@ -8,6 +7,10 @@ import { Message } from '@angular-nest/api-interfaces';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) {}
+  recipeList: Recipe[] = [];
+  constructor() {}
+
+  addRecipeToList(res: Recipe) {
+    this.recipeList.push(res);
+  }
 }

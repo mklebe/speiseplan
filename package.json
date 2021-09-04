@@ -2,11 +2,13 @@
   "name": "angular-nest",
   "version": "0.0.0",
   "license": "MIT",
+  "engines": {
+    "node": "v14.17.4"
+  },
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
-    "start": "nx serve",
-    "build": "nx build",
+    "start": "node dist/apps/api/main",
     "test": "nx test"
   },
   "private": true,
@@ -22,6 +24,7 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/serve-static": "^2.2.2",
     "@nrwl/angular": "12.8.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.0",
