@@ -1,5 +1,29 @@
 <h2>Create new Recipe</h2>
 <form [formGroup]="recipeForm" (ngSubmit)="submitForm()">
-  <input type="text" name="name" formControlName="recipeName">
-  <button type="submit">Submit recipe</button>
+  <div class="form-group">
+    <label for="name">
+      Rezeptname
+    </label>
+    <input class="form-control" type="text" name="name" formControlName="recipeName">
+  </div>
+  <div class="form-group d-flex">
+    <h3>Zutatenliste</h3>
+    <button style="margin-left: auto;" class="btn btn-info add-ingredient" (click)="addIngredientRow($event)">Zutat hinzufügen</button>
+  </div>
+  <div formArrayName="ingredients">
+    <div class="form-group" *ngFor="let ing of ingredients.controls; let i=index">
+      <div class="input-group" [formGroupName]="i">
+        <span class="input-group-prepend" for="zutat">
+          <span class="input-group-text">
+            {{i+1}}. Zutat
+          </span>
+        </span>
+        <input formControlName="name" class="form-control" name="zutat-{{i}}" type="text">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="removeIngredientRow($event, i)">Entferne Zutat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" type="submit">Submit recipe</button>
 </form>

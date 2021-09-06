@@ -5,10 +5,11 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, RecipeFormComponent],
-  imports: [BrowserModule, HttpClientModule, ReactiveFormsModule, FormsModule],
+  imports: [BrowserModule, HttpClientModule, ReactiveFormsModule, FormsModule, NgbModule],
   providers: [],
   bootstrap: [AppComponent],
 })
