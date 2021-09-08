@@ -12,11 +12,11 @@ export class MealService {
     private readonly http: HttpClient,
    ) { }
 
-   genericApiCall(): Observable<Object> {
-     return this.http.get('http://localhost:3000');
-   }
+  //  genericApiCall(): Observable<Object> {
+  //    return this.http.get('http://localhost:3000');
+  //  }
 
    getGulasch(): Observable<Recipe[]> {
-     return this.http.get<Recipe[]>('http://localhost:3000/api/gulasch')
+     return this.http.get<Recipe[]>('/api/gulasch')
    }
 }
