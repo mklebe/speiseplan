@@ -9,5 +9,21 @@ datasource db {
 
 model Ingredient {
   id    Int     @id @default(autoincrement())
+  name String
+  recipe IngredientsInRecipe[]
+}
+
+model Recipe {
+  id  Int   @id @default(autoincrement())
   name  String
+  ingredients IngredientsInRecipe[]
+}
+
+model IngredientsInRecipe {
+  recipe  Recipe @relation(fields: [recipeId], references: [id])
+  recipeId  Int
+  ingredient  Ingredient  @relation(fields: [ingredientId], references: [id])
+  ingredientId  Int
+
+ @@id([recipeId, ingredientId]) 
 }
