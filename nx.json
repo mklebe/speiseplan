@@ -34,8 +34,7 @@
       "tags": []
     },
     "speiseplan": {
-      "tags": [],
-      "implicitDependencies": ["api"]
+      "tags": []
     },
     "speiseplan-e2e": {
       "tags": [],
