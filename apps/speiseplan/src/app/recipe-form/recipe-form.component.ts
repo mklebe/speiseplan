@@ -1,13 +1,13 @@
-import { Ingredient, Recipe } from '@angular-nest/api-interfaces';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Recipe } from '@angular-nest/api-interfaces';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'angular-nest-recipe-form',
   templateUrl: './recipe-form.component.html',
   styleUrls: ['./recipe-form.component.scss']
 })
-export class RecipeFormComponent implements OnInit {
+export class RecipeFormComponent  {
   @Input() recipe: Recipe = {
     name: '',
     ingredients: []
@@ -36,9 +36,6 @@ export class RecipeFormComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
   addIngredientRow(event: MouseEvent) {
     event.preventDefault();
     this.ingredients.push(this.newIngredient());
@@ -50,13 +47,13 @@ export class RecipeFormComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log( this.recipeForm.value )
     const recipe: Recipe = {
       name: this.recipeForm.value.recipeName,
       ingredients: this.recipeForm.value.ingredients,
     }
 
     this.submitRecipe.emit(recipe);
+    this.recipeForm.reset();
   }
 
 }

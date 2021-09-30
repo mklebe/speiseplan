@@ -1,15 +1,6 @@
 <angular-nest-recipe-form
-  [recipe]="{name: 'Foooo', ingredients: []}"
   (submitRecipe)="addRecipeToList($event)">
 </angular-nest-recipe-form>
-<h2 class="recipe-heading">Liste aller {{ recipeList.length }} Rezepte</h2>
 
-<article (click)="highlightRecipe(recipe)" *ngFor="let recipe of recipeList" class="card recipe-list-item">
-  <span>{{ recipe.name }}</span>
-  <ul *ngIf="recipe.isHighlighted" class="list-group">
-    <li class="list-group-item" *ngFor="let ing of recipe.ingredients">
-      <span class="recipe-ingredient">{{ ing.name }}</span>
-      </li>
-  </ul>
-</article>
+<angular-nest-recipe-list [recipeList]="recipeList"></angular-nest-recipe-list>
 
