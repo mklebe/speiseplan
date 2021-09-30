@@ -4,6 +4,9 @@ import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { IngredientController } from './ingredient/ingredient.controller';
 import { IngredientService } from './ingredient/ingredient.service';
+import { PrismaService } from './prisma/prisma.service';
+import { RecipeService } from './recipe/recipe.service';
+import { RecipeController } from './recipe/recipe.controller';
 
 @Module({
   imports: [
@@ -12,7 +15,7 @@ import { IngredientService } from './ingredient/ingredient.service';
       exclude: ['api'],
     }),
   ],
-  controllers: [IngredientController],
-  providers: [IngredientService],
+  controllers: [IngredientController, RecipeController],
+  providers: [IngredientService, PrismaService, RecipeService],
 })
 export class AppModule {}
