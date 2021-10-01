@@ -7,11 +7,12 @@
   },
   "scripts": {
     "ng": "nx",
-    "build": "nx run-many --target=build --projects=api,speiseplan --parallel=true",
+    "build": "nx run-many --target=build --projects=models,api,speiseplan --parallel=true",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "start": "node dist/apps/api/main.js",
     "test": "nx test",
-    "dev": "nx run-many --target=serve --projects=api,speiseplan --parallel=true"
+    "dev": "nx run-many --target=serve --projects=api,speiseplan --parallel=true",
+    "migrate": "prisma migrate deploy"
   },
   "private": true,
   "dependencies": {
