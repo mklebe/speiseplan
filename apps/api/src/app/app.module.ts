@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -11,7 +11,7 @@ import { SearchService } from './search/search.service';
 import {ElasticsearchModule} from '@nestjs/elasticsearch'
 
 const dotenv = require('dotenv')
-const ELASTIC_SEARCH_HOST = process.env.SEARCHBOX_URL
+const ELASTIC_SEARCH_HOST = process.env.SEARCH_ENGINE_URL
 dotenv.config()
 
 @Module({
@@ -27,4 +27,15 @@ dotenv.config()
   controllers: [IngredientController, RecipeController],
   providers: [IngredientService, PrismaService, RecipeService, SearchService],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(
+    private readonly searchService: SearchService,
+    private readonly ingredientService: IngredientService,
+  ) { }
+
+  async onModuleInit() {
+    await this.searchService.dropIndices();
+    const ingredients = await this.ingredientService.getAll()
+    this.searchService.bulkAddIngredients(ingredients);
+  }
+}
