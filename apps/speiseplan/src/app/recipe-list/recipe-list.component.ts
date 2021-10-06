@@ -1,9 +1,8 @@
 import { Recipe } from '@angular-nest/api-interfaces';
 import { 
-  Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output
+  Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { MealService } from '../meal.service';
+import { Subject } from 'rxjs';
 
 interface ListedRecipe extends Recipe {
   isHighlighted: boolean;
@@ -14,7 +13,7 @@ interface ListedRecipe extends Recipe {
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.scss']
 })
-export class RecipeListComponent implements OnInit, OnDestroy {
+export class RecipeListComponent implements OnInit {
 
   renderedList: ListedRecipe[] = [];
   // recipeListSubscription: Subscription
@@ -41,10 +40,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
         }
       })
     })
-  }
-
-  ngOnDestroy(): void {
-    // this.recipeListSubscription.unsubscribe()
   }
 
   removeRecipeFromList(r: Recipe): void {
