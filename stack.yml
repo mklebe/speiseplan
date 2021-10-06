@@ -2,6 +2,13 @@
 version: '3.1'
 
 services:
+  searchengine:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+
   db:
     image: postgres
     restart: unless-stopped
