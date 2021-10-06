@@ -8,15 +8,9 @@ import { Observable, Subject } from 'rxjs';
 })
 export class MealService {
 
-  private subject: Subject<Recipe[]>;
-  private recipeList: Recipe[]; 
-
   constructor( 
     private readonly http: HttpClient,
-   ) {
-      this.subject = new Subject<Recipe[]>();
-      this.recipeList = [];
-   }
+   ) { }
 
    getGulasch(): Observable<Recipe[]> {
      return this.http.get<Recipe[]>('/api/gulasch');
