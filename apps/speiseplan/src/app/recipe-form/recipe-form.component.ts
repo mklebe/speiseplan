@@ -1,6 +1,6 @@
-import { Recipe } from '@angular-nest/api-interfaces';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Recipe } from '@prisma/client';
 
 @Component({
   selector: 'angular-nest-recipe-form',
@@ -9,8 +9,9 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class RecipeFormComponent  {
   @Input() recipe: Recipe = {
+    id: 0,
     name: '',
-    ingredients: []
+    // ingredients: []
   };
 
   @Output() submitRecipe = new EventEmitter<Recipe>();
@@ -48,8 +49,9 @@ export class RecipeFormComponent  {
 
   submitForm(): void {
     const recipe: Recipe = {
+      id: 0,
       name: this.recipeForm.value.recipeName,
-      ingredients: this.recipeForm.value.ingredients,
+      // ingredients: this.recipeForm.value.ingredients,
     }
 
     this.submitRecipe.emit(recipe);

@@ -1,5 +1,5 @@
 import { Ingredient } from "@prisma/client";
-import { Body, Controller, Delete, Get, Param, ParamData, Patch, Post } from "@nestjs/common"
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common"
 import { IngredientService } from "./ingredient.service"
 
 @Controller('ingredient')

@@ -1,7 +1,7 @@
-import { Recipe } from '@angular-nest/api-interfaces';
+import { Ingredient, Recipe } from '@prisma/client'
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,13 @@ export class MealService {
 
    getRecipes(): Observable<Recipe[]> {
      return this.http.get<Recipe[]>('/api/recipe');
+   }
+
+   addIngredient( ingredient: Ingredient ): Observable<Ingredient> {
+     return this.http.post<Ingredient>('/api/ingredient', ingredient);
+   }
+
+   getAllIngredients(): Observable<Ingredient[]> {
+     return this.http.get<Ingredient[]>('/api/ingredient');
    }
 }

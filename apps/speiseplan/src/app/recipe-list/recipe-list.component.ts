@@ -1,7 +1,7 @@
-import { Recipe } from '@angular-nest/api-interfaces';
 import { 
   Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
+import { Recipe } from '@prisma/client';
 import { Subject } from 'rxjs';
 
 interface ListedRecipe extends Recipe {

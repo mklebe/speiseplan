@@ -2,9 +2,4 @@
 
 <article (click)="highlightRecipe(recipe)" *ngFor="let recipe of renderedList" class="card recipe-list-item">
   <span>{{ recipe.name }}</span>
-  <ul *ngIf="recipe.isHighlighted" class="list-group">
-    <li class="list-group-item" *ngFor="let ing of recipe.ingredients">
-      <span class="recipe-ingredient">{{ ing.name }}</span>
-      </li>
-  </ul>
 </article>
