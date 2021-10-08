@@ -12,6 +12,8 @@ services:
   db:
     image: postgres
     restart: unless-stopped
+    volumes:
+         - pgdata:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
@@ -23,3 +25,6 @@ services:
     restart: always
     ports:
       - 8080:8080
+
+volumes:
+  pgdata:
