@@ -1,1 +1,13 @@
-<p>ingredient-page works!</p>
+<h1>Ingredient Page</h1>
+<form [formGroup]="ingredientForm" (ngSubmit)="formSubmit()">
+  <div class="form-group">
+    <input type="text" name="name" formControlName="name">
+  </div>
+  <button>Submit Ingredient</button>
+</form>
+<ul>
+  <li *ngFor="let ingredient of ingredientList">
+    {{ ingredient.name }}
+    <button class="btn btn-info" (click)="deleteIngredient(ingredient)">Delete</button>
+  </li>
+</ul>

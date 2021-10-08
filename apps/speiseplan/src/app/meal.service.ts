@@ -28,6 +28,10 @@ export class MealService {
      return this.http.post<Ingredient>('/api/ingredient', ingredient);
    }
 
+   deleteIngredient( ingredient: Ingredient ): Observable<Ingredient> {
+     return this.http.delete<Ingredient>(`/api/ingredient/${ingredient.id}`)
+   }
+
    getAllIngredients(): Observable<Ingredient[]> {
      return this.http.get<Ingredient[]>('/api/ingredient');
    }

@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Recipe } from '@angular-nest/api-interfaces';
-import { MealService } from './meal.service';
-import { Subject } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'angular-nest-root',

@@ -20,7 +20,15 @@ const appRoutes: Routes = [
 ]
 
 @NgModule({
-  declarations: [AppComponent, RecipeFormComponent, RecipeListComponent, AddIngredientFormComponent, IngredientPageComponent, HomeComponent, RecipePageComponent],
+  declarations: [
+    AppComponent,
+    IngredientPageComponent,
+    RecipeFormComponent,
+    RecipeListComponent,
+    AddIngredientFormComponent,
+    HomeComponent,
+    RecipePageComponent
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,

@@ -20,7 +20,9 @@ export class IngredientService implements IngredientCRUD {
   }
 
   createIngredient( ingredient: Ingredient ): Promise<Ingredient> {
-    return this.prisma.ingredient.create( { data: ingredient } );
+    return this.prisma.ingredient.create( { data: {
+      name: ingredient.name
+    }} );
   }
 
   updateIngredient(id: number, ingredient: Ingredient): Promise<Ingredient> {
