@@ -161,7 +161,9 @@
           },
           "defaultConfiguration": "development",
           "options": {
-            "proxyConfig": "apps/speiseplan/proxy.conf.json"
+            "proxyConfig": "apps/speiseplan/proxy.conf.json",
+            "host": "0.0.0.0",
+            "disableHostCheck": true
           }
         },
         "extract-i18n": {
