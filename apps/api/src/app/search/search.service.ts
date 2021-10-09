@@ -11,7 +11,9 @@ export class SearchService {
   ) {}
 
   async dropIndices(): Promise<any> {
-    return this.elasticSearch.indices.delete({index: '_all'})
+    const index: string = INGREDIENT_SEARCH_INDEX;
+
+    return this.elasticSearch.indices.delete({ index })
   }
 
   async addIngredient( ingredient: Ingredient ): Promise<any> {
