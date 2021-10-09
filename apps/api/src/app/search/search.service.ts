@@ -13,7 +13,15 @@ export class SearchService {
   async dropIndices(): Promise<any> {
     const index: string = INGREDIENT_SEARCH_INDEX;
 
-    return this.elasticSearch.indices.delete({ index })
+    try {
+      this.elasticSearch.indices.delete({ index })
+    } catch(e) {
+      console.log(`Could not delete ${index}, continue`);
+    }
+
+    return this.elasticSearch.indices.create({
+      index,
+    })
   }
 
   async addIngredient( ingredient: Ingredient ): Promise<any> {
