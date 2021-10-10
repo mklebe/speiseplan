@@ -1,10 +1,12 @@
 import { Ingredient } from "@prisma/client";
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common"
 import { IngredientService } from "./ingredient.service"
+import { SearchService } from "../search/search.service";
 
 @Controller('ingredient')
 export class IngredientController {
   constructor(
+    private readonly searchService: SearchService,
     private readonly ingredientService: IngredientService
   ) {}
 
@@ -12,12 +14,20 @@ export class IngredientController {
   async createIngredient(
     @Body() ingredient: Ingredient
   ): Promise<Ingredient> {
-    return this.ingredientService.createIngredient(ingredient);
+    const savedIng =  await this.ingredientService.createIngredient(ingredient);
+    await this.searchService.addIngredient(savedIng);
+
+    return savedIng
   }
 
   @Get()
   async getIngredients(): Promise<Ingredient[]> {
     return this.ingredientService.getAll();
+  }
+
+  @Get('search/:term')
+  async searchIngredient(@Param('term') term: string): Promise<Ingredient[]> {
+    return this.searchService.searchIngredient(term);
   }
 
   @Patch(':id')

@@ -24,8 +24,16 @@ dotenv.config()
       node: ELASTIC_SEARCH_HOST,
     }),
   ],
-  controllers: [IngredientController, RecipeController],
-  providers: [IngredientService, PrismaService, RecipeService, SearchService],
+  controllers: [
+    IngredientController,
+    RecipeController
+  ],
+  providers: [
+    IngredientService,
+    PrismaService,
+    RecipeService,
+    SearchService
+  ],
 })
 export class AppModule implements OnModuleInit {
   constructor(
@@ -36,6 +44,6 @@ export class AppModule implements OnModuleInit {
   async onModuleInit() {
     await this.searchService.dropIndices();
     const ingredients = await this.ingredientService.getAll()
-    this.searchService.bulkAddIngredients(ingredients);
+    await this.searchService.bulkAddIngredients(ingredients);
   }
 }

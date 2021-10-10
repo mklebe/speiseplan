@@ -1,6 +1,13 @@
 import { Ingredient } from '@prisma/client';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch'
+
+interface SearchIngredient extends Ingredient {
+  suggest: Array<{
+    input: string,
+    weight: number,
+  }>;
+}
 
 const INGREDIENT_SEARCH_INDEX = 'ingredient-search-index';
 
@@ -13,15 +20,53 @@ export class SearchService {
   async dropIndices(): Promise<any> {
     const index: string = INGREDIENT_SEARCH_INDEX;
 
-    try {
-      this.elasticSearch.indices.delete({ index })
-    } catch(e) {
-      console.log(`Could not delete ${index}, continue`);
-    }
+    await this.elasticSearch.indices.delete({ index })
+      .then(() => {
+        console.log(`Successfully deleted index: ${index}`)
+      })
+      .catch(() => {
+        console.log(`Could not delete ${index}, continue`);
+      })
 
-    return this.elasticSearch.indices.create({
+    await this.elasticSearch.indices.create({ 
       index,
+      body: {
+        mappings: {
+          "properties": {
+            "name": {
+              "type": "text",
+            },
+            suggest: {
+              type: "completion"
+            }
+          }
+        }
+      }
     })
+  }
+
+  async searchIngredient(term: string): Promise<Ingredient[]> {
+    const a = await this.elasticSearch.search({
+      body: {
+        suggest: {
+          [INGREDIENT_SEARCH_INDEX]: {
+            prefix: term,
+            completion: {
+              field: 'suggest',
+              fuzzy: {
+                fuzziness: 1,
+              }
+            }
+          }
+        }
+      }
+    });
+
+    const result: Ingredient[] = 
+      a.body.suggest[INGREDIENT_SEARCH_INDEX][0].options.map((si: any) => {
+        return this.getIngredientFromSearchIngredient(si._source)
+    })
+    return result;
   }
 
   async addIngredient( ingredient: Ingredient ): Promise<any> {
@@ -29,6 +74,27 @@ export class SearchService {
       index: INGREDIENT_SEARCH_INDEX,
       body: ingredient,
     });
+  }
+
+  private getSearchIngredientFromIngredient(ingredient: Ingredient): SearchIngredient {
+    const suggest = ingredient.name.split(' ').map(( term ) => {
+      return {
+        input: term,
+        weight: 1,
+      }
+    })
+    
+    return { 
+      suggest,
+      ... ingredient,
+    }
+  }
+
+  private getIngredientFromSearchIngredient(si: SearchIngredient): Ingredient {
+    const ingredient = {...si};
+    delete ingredient.suggest
+
+    return ingredient;
   }
 
   async bulkAddIngredients( ingredients: Ingredient[] ): Promise<any> {
@@ -43,7 +109,9 @@ export class SearchService {
           '_type': '_doc'
         }
       })
-      body.push( ingredient );
+      body.push(
+        this.getSearchIngredientFromIngredient(ingredient)
+       );
     })
 
     this.elasticSearch.bulk({
