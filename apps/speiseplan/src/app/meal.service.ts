@@ -35,4 +35,8 @@ export class MealService {
    getAllIngredients(): Observable<Ingredient[]> {
      return this.http.get<Ingredient[]>('/api/ingredient');
    }
+
+   searchIngredient(term: string): Observable<Ingredient[]> {
+     return this.http.get<Ingredient[]>(`/api/ingredient/search/${term}`);
+   }
 }
