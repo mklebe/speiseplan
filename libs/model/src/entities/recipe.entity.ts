@@ -1,5 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Ingredient } from '.';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Recipe {
@@ -9,6 +8,4 @@ export class Recipe {
 
   @Column()
   name: string;
-
-  @ManyToMany(() => Ingredient)
 }

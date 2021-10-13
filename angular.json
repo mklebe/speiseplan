@@ -56,18 +56,28 @@
       "sourceRoot": "libs/model/src",
       "projectType": "library",
       "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
+        "create-migration": {
+          "builder": "@nrwl/workspace:run-commands",
+          "outputs": [],
           "options": {
-            "lintFilePatterns": ["libs/model/**/*.ts"]
+            "command": "ts-node ../../node_modules/typeorm/cli.js migration:generate -f ormconfig.ts",
+            "cwd": "libs/model"
           }
         },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/model"],
+        "migrate-prod": {
+          "builder": "@nrwl/workspace:run-commands",
+          "outputs": [],
           "options": {
-            "jestConfig": "libs/model/jest.config.js",
-            "passWithNoTests": true
+            "command": "ts-node ../../node_modules/typeorm/cli.js migration:run -f ormconfig.ts",
+            "cwd": "libs/model"
+          }
+        },
+        "migrate-test": {
+          "builder": "@nrwl/workspace:run-commands",
+          "outputs": [],
+          "options": {
+            "command": "ts-node ../../node_modules/typeorm/cli.js migration:run -f ormtestconfig.ts",
+            "cwd": "libs/model"
           }
         }
       }
