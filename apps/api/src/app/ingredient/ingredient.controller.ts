@@ -36,7 +36,7 @@ export class IngredientController {
   }
 
   @Delete(':id')
-  async deleteIngredient(@Param('id') id: string): Promise<Ingredient> {
+  async deleteIngredient(@Param('id') id: string): Promise<void> {
     return this.ingredientService.deleteIngredient(parseInt(id));
   }
 }

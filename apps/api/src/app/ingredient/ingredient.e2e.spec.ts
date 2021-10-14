@@ -76,6 +76,31 @@ describe('ingredients', () => {
           ])
         )
       })
+  });
+
+  it('must must update the ingredient "Porree" with "Lauch"', async () => {
+    const { id } = await ingredientRepository.save({
+      name: 'Poree'
+    });
+
+    await request(app.getHttpServer())
+      .patch(`/ingredient/${id}`)
+      .send({ name: 'Lauch' })
+    
+    const result = await ingredientRepository.findOne({ id })
+    expect(result.name).toBe('Lauch')
+  });
+
+  it('must delete Lauch', async () => {
+    const { id } = await ingredientRepository.save({
+      name: 'Lauch'
+    });
+
+    await request(app.getHttpServer())
+      .delete(`/ingredient/${id}`)
+    
+    const result = await ingredientRepository.find({ id })
+    expect(result).toHaveLength(0)
   })
 
   afterAll(() => {

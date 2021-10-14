@@ -3,16 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-export interface IngredientCRUD {
-  getAll: () => Promise<Ingredient[]>,
-  createIngredient: (Ingredient) => Promise<Ingredient>,
-  updateIngredient: (number, Ingredient) => Promise<Ingredient>,
-  deleteIngredient: (number) => Promise<Ingredient>
-}
-
-
 @Injectable()
-export class IngredientService implements IngredientCRUD {
+export class IngredientService {
 
   constructor(
     @InjectRepository(Ingredient)
@@ -31,12 +23,13 @@ export class IngredientService implements IngredientCRUD {
   }
 
   updateIngredient(id: number, ingredient: Ingredient): Promise<Ingredient> {
-    return Promise.resolve(ingredient)
-    // return  this.prisma.ingredient.update( {where: {id}, data: ingredient} );
+    return  this.ingredientRepository.save({
+      ...ingredient,
+      id,
+    });
   }
 
-  deleteIngredient( id: number ): Promise<Ingredient> {
-    return Promise.resolve({id: 0, name: ''})
-    // return this.prisma.ingredient.delete({ where: { id } });
+  async deleteIngredient( id: number ): Promise<void> {
+    await this.ingredientRepository.delete({ id })
   }
 }
