@@ -8,7 +8,6 @@ const defaultConfig: TypeOrmModuleOptions = {
    "type": "postgres",
    "url": process.env.DATABASE_URL,
    "synchronize": true,
-   "logging": true,
    "migrationsTableName": "migration-prod",
    "entities": [
       User,

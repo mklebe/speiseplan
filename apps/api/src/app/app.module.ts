@@ -14,6 +14,7 @@ import { UsersModule } from './user/user.module';
 import { UserService } from './user/user.service';
 import { UserController } from './user/user.controller';
 import { Connection } from 'typeorm';
+import { IngredientModule } from './ingredient/ingredient.module';
 
 const dotenv = require('dotenv')
 dotenv.config()
@@ -25,20 +26,16 @@ const ELASTIC_SEARCH_HOST = process.env.SEARCH_ENGINE_URL
       rootPath: join(__dirname, '..', 'speiseplan'),
       exclude: ['api'],
     }),
-    ElasticsearchModule.register({
-      node: ELASTIC_SEARCH_HOST,
-    }),
     TypeOrmModule.forRoot( {
       ... prodConfig as TypeOrmModuleOptions
     }),
     UsersModule,
+    IngredientModule,
   ],
   controllers: [
-    // IngredientController,
     // RecipeController,
   ],
   providers: [
-    // IngredientService,
     // RecipeService,
     // SearchService,
   ],
@@ -46,8 +43,6 @@ const ELASTIC_SEARCH_HOST = process.env.SEARCH_ENGINE_URL
 export class AppModule implements OnModuleInit {
   constructor(
     // private readonly searchService: SearchService,
-    // private readonly ingredientService: IngredientService,
-    private readonly connection: Connection,
   ) { }
 
   async onModuleInit() {

@@ -1,6 +1,7 @@
+import { Ingredient } from '@angular-nest/model';
 import { Injectable } from '@nestjs/common';
-import { Ingredient } from '@prisma/client'
-import { PrismaService } from '../prisma/prisma.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 export interface IngredientCRUD {
   getAll: () => Promise<Ingredient[]>,
@@ -13,23 +14,29 @@ export interface IngredientCRUD {
 @Injectable()
 export class IngredientService implements IngredientCRUD {
 
-  constructor( private readonly prisma: PrismaService ) {}
+  constructor(
+    @InjectRepository(Ingredient)
+    private readonly ingredientRepository: Repository<Ingredient>,
+  ) {}
 
   getAll(): Promise<Ingredient[]> {
-    return this.prisma.ingredient.findMany();
+    return this.ingredientRepository.find();
   }
 
   createIngredient( ingredient: Ingredient ): Promise<Ingredient> {
-    return this.prisma.ingredient.create( { data: {
-      name: ingredient.name
-    }} );
+    return Promise.resolve( ingredient )
+    // return this.prisma.ingredient.create( { data: {
+    //   name: ingredient.name
+    // }} );
   }
 
   updateIngredient(id: number, ingredient: Ingredient): Promise<Ingredient> {
-    return  this.prisma.ingredient.update( {where: {id}, data: ingredient} );
+    return Promise.resolve(ingredient)
+    // return  this.prisma.ingredient.update( {where: {id}, data: ingredient} );
   }
 
   deleteIngredient( id: number ): Promise<Ingredient> {
-    return this.prisma.ingredient.delete({ where: { id } });
+    return Promise.resolve({id: 0, name: ''})
+    // return this.prisma.ingredient.delete({ where: { id } });
   }
 }
