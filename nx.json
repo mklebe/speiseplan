@@ -30,10 +30,7 @@
     "api": {
       "tags": []
     },
-    "api-interfaces": {
-      "tags": []
-    },
-    "models": {
+    "model": {
       "tags": []
     },
     "speiseplan": {

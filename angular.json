@@ -51,15 +51,33 @@
         }
       }
     },
-    "api-interfaces": {
-      "root": "libs/api-interfaces",
-      "sourceRoot": "libs/api-interfaces/src",
+    "model": {
+      "root": "libs/model",
+      "sourceRoot": "libs/model/src",
       "projectType": "library",
       "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
+        "create-migration": {
+          "builder": "@nrwl/workspace:run-commands",
+          "outputs": [],
           "options": {
-            "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
+            "command": "ts-node ../../node_modules/typeorm/cli.js migration:generate -f ormconfig.ts",
+            "cwd": "libs/model"
+          }
+        },
+        "migrate-prod": {
+          "builder": "@nrwl/workspace:run-commands",
+          "outputs": [],
+          "options": {
+            "command": "ts-node ../../node_modules/typeorm/cli.js migration:run -f ormconfig.ts",
+            "cwd": "libs/model"
+          }
+        },
+        "migrate-test": {
+          "builder": "@nrwl/workspace:run-commands",
+          "outputs": [],
+          "options": {
+            "command": "ts-node ../../node_modules/typeorm/cli.js migration:run -f ormtestconfig.ts",
+            "cwd": "libs/model"
           }
         }
       }

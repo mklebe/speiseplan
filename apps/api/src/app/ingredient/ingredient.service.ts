@@ -1,35 +1,35 @@
+import { Ingredient } from '@angular-nest/model';
 import { Injectable } from '@nestjs/common';
-import { Ingredient } from '@prisma/client'
-import { PrismaService } from '../prisma/prisma.service';
-
-export interface IngredientCRUD {
-  getAll: () => Promise<Ingredient[]>,
-  createIngredient: (Ingredient) => Promise<Ingredient>,
-  updateIngredient: (number, Ingredient) => Promise<Ingredient>,
-  deleteIngredient: (number) => Promise<Ingredient>
-}
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
-export class IngredientService implements IngredientCRUD {
+export class IngredientService {
 
-  constructor( private readonly prisma: PrismaService ) {}
+  constructor(
+    @InjectRepository(Ingredient)
+    private readonly ingredientRepository: Repository<Ingredient>,
+  ) {}
 
   getAll(): Promise<Ingredient[]> {
-    return this.prisma.ingredient.findMany();
+    return this.ingredientRepository.find();
   }
 
   createIngredient( ingredient: Ingredient ): Promise<Ingredient> {
-    return this.prisma.ingredient.create( { data: {
-      name: ingredient.name
-    }} );
+    const tempIngredient = {... ingredient}
+    delete tempIngredient.id
+
+    return this.ingredientRepository.save( tempIngredient );
   }
 
   updateIngredient(id: number, ingredient: Ingredient): Promise<Ingredient> {
-    return  this.prisma.ingredient.update( {where: {id}, data: ingredient} );
+    return  this.ingredientRepository.save({
+      ...ingredient,
+      id,
+    });
   }
 
-  deleteIngredient( id: number ): Promise<Ingredient> {
-    return this.prisma.ingredient.delete({ where: { id } });
+  async deleteIngredient( id: number ): Promise<void> {
+    await this.ingredientRepository.delete({ id })
   }
 }
